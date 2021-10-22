@@ -1,0 +1,25 @@
+---
+- name: Ansible Lesson 19
+  hosts: all
+  any_errors_fatal: true #прекращает вcе таски если будет хоть одна ошибка
+  become: yes
+
+  tasks:
+
+  - name: Task Nubmer 1
+    yum: name=treeeee state=latest
+    ignore_errors: yes #игнорирует ошибку таска
+
+  
+  - name: Task Number 2
+    shell: echo Hello World!
+    register: results
+    failed_when: results.rc == 0
+#    failed_when: "'World' in results.stdout" выдать ошибку если есть такое слово
+    
+
+  - debug:
+      var: results
+
+  - name: Task Number 3
+    shell: echo Goodbye

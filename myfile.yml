@@ -1,0 +1,35 @@
+---
+
+ - fruits:
+   - apple
+   - orange]
+   - mango
+ - vegetebl
+   - cucumber
+
+
+
+ - vasya:
+     nick: vasel
+     position: developer
+     skills:
+       - python
+       - perl
+       - html
+
+
+ - petya:
+     nick: "pet: krutt"
+     position: manager
+     skills:
+       - manage
+       - make_noise
+
+
+ - kolya: { nick: kolyan, position: admin, skills: ['killer', 'cleaner'] }
+
+
+
+
+
+        

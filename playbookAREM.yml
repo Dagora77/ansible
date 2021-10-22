@@ -1,0 +1,21 @@
+---
+- name: Remove Apache Web Server on RedHot and Debian familys
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: Check and show OS family
+    debug: var=ansible_os_family
+
+  - block: #RedHat
+ 
+     - name: Remove WebServer from RedHat
+       yum: name=httpd state=removed
+    when: ansible_os_family == "RedHat"
+
+  - block:
+     - name: Remove WebServer from Debian
+       apt: name=apache2 state=absent
+    when: ansible_os_family == "Debian"
+ 
+

@@ -1,0 +1,46 @@
+---
+- name: Ansible Encrypt lesson
+  hosts: all
+  become: yes
+
+  vars:
+    admin_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          65386636303437373365393934363632356239636334353166363465313665663435663037386264
+          6664623164663939393338623461333035666265346161340a353264383132343538366265383238
+          65373333373965326237626335316636373933316332653138316136626535366134323566356434
+          6166663566393832640a353330343363656566383637643036393362633934373530653265306662
+          3266
+
+  tasks:
+  - name: Install package Tree (RedHat)
+    yum: name=tree state=latest
+    when: ansible_os_family == "RedHat"
+
+  - name: Install package Tree (Debian)
+    apt: name=tree state=latest
+    when: ansible_os_family == "Debian"
+
+  - name: Create config file (RedHat)
+    copy:
+      dest: "/home/ec2-user/myconfig.conf"
+      content: |
+         port = 9092
+         log = 7days
+         home = /opt/kafka/bin/
+         user = admin
+         password = {{ admin_password }}
+    when: ansible_os_family == "RedHat"
+
+
+  - name: Create config file (Debian)
+    copy:
+      dest: "/home/ubuntu/myconfig.conf"
+      content: |
+         port = 9092
+         log = 7days
+         home = /opt/kafka/bin/
+         user = admin
+         password = {{ admin_password }}
+    when: ansible_os_family == "Debian"
+

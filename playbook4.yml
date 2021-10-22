@@ -1,0 +1,34 @@
+---
+- name: My Playbook variables
+  hosts: all
+  become: yes
+
+
+  vars:
+   message1: Pizda
+   message2: Huy
+   secret: Vam FLSAFkSDKF:SLDKGS:LDKG:L
+
+  tasks:
+  - name: Print values
+    debug:
+      var: secret
+
+  - debug:
+      msg: "Sekretnoe slovo {{ message1 }}"
+ 
+  - debug:
+      msg: "Vladelets etogo servera -->{{ owner }}<--"
+
+  - set_fact: full_massage="{{ message1 }} {{ message2 }} from {{ owner }}"
+
+  - debug:
+      var: full_massage
+  - debug:
+      var: ansible_distribution
+
+  - shell: uptime
+    register: results
+
+  - debug:
+      var: results.start

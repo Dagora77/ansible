@@ -1,0 +1,33 @@
+---
+- name: Loob Playbook
+  hosts: linux1
+  become: yes
+
+  tasks:
+  - name: Say Hello to ALL
+    debug: msg="Hello {{ item }}"
+    loop:
+      - "vasya"
+      - "petya"
+      - "valera"
+      - "olha"
+
+
+
+  - name: Loop until example
+    shell: echo -n Z >> myfile.txt && cat myfile.txt
+    register: output
+    delay: 2 #sec
+    retries: 10
+    until: output.stdout.find("ZZZZ") == false 
+
+  - name: Print Final Outpur
+    debug:
+      var: output.stdout
+
+#  - name: Install many packaged
+#    yum: name={{ item }} state=installed
+#    with_items:
+#          - python
+#          - tree
+#          - mysql-client
